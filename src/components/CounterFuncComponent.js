@@ -14,7 +14,20 @@ const CounterFunctionComponent = () => {
 
   useEffect(() => {
     document.title = `You have clicked ${count} times`;
-  });
+
+    window.addEventListener("mouseover", handleMouseOver);
+
+    return () => {
+      window.removeEventListener("mouseover", handleMouseOver);
+    };
+  }, [count]);
+  // [] arrays says it will run on mount and unmount
+  const handleMouseOver = (event) => {
+    setPosition({
+      x: event.pageX,
+      y: event.pageY,
+    });
+  };
 
   return (
     <div>
@@ -30,6 +43,12 @@ const CounterFunctionComponent = () => {
         }}
         onClick={toggle}
       ></div>
+
+      <div>
+        <h2>Mosue postion</h2>
+        <h4>hjhj</h4>
+        <h3>{JSON.stringify(positiom)}</h3>
+      </div>
     </div>
   );
 };
