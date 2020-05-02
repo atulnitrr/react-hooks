@@ -4,7 +4,7 @@ import { getDefaultNormalizer } from "@testing-library/react";
 
 export default function DataFetch() {
   const [articles, setArticles] = useState([]);
-  const [query, setQuery] = useState("reacthooks");
+  const [query, setQuery] = useState("react hooks");
 
   // useEffect(async () => {
   //   // async await method
@@ -26,9 +26,11 @@ export default function DataFetch() {
   //     */
   // }, []);
 
+  // we need to put [] as it will run only in case of mount and unmount otherwise it will be infinte loop
+
   useEffect(() => {
     getData();
-  });
+  }, []);
 
   const getData = async () => {
     var data = await axios.get(
@@ -37,16 +39,24 @@ export default function DataFetch() {
     setArticles(data.data.hits);
   };
 
-  // we need to put [] as it will run only in case of mount and unmount otherwise it will be infinte loop
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    getData();
+  };
+
   return (
     <div>
       {/* <h2>Data fetch</h2> */}
-      <input
-        type="text"
-        id="query"
-        placeholder="seach...."
-        onChange={(event) => setQuery(event.target.value)}
-      />
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          id="query"
+          placeholder="seach...."
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
       <ul>
         {articles.map((art) => (
           <li key={art.objectID}>
