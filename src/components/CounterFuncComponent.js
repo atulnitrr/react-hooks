@@ -4,6 +4,8 @@ const CounterFunctionComponent = () => {
   const [count, setCount] = useState(0);
   const [isOn, setIsOn] = useState(false);
   const [positiom, setPosition] = useState({ x: null, y: null });
+  const [onlineStaus, setOnlineStatus] = useState(navigator.onLine);
+
   const increment = () => {
     setCount((prevCount) => prevCount + 1);
   };
@@ -17,11 +19,22 @@ const CounterFunctionComponent = () => {
 
     window.addEventListener("mouseover", handleMouseOver);
 
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
     return () => {
       window.removeEventListener("mouseover", handleMouseOver);
     };
   }, [count]);
   // [] arrays says it will run on mount and unmount
+
+  const handleOnline = (event) => {
+    setOnlineStatus(true);
+  };
+
+  const handleOffline = (event) => {
+    setOnlineStatus(false);
+  };
   const handleMouseOver = (event) => {
     setPosition({
       x: event.pageX,
@@ -48,6 +61,13 @@ const CounterFunctionComponent = () => {
         <h2>Mosue postion</h2>
         <h4>hjhj</h4>
         <h3>{JSON.stringify(positiom)}</h3>
+      </div>
+
+      <div>
+        <h2>Network status</h2>
+        <h3>
+          Youe are <strong>{onlineStaus ? "Online" : "Offline"}</strong>{" "}
+        </h3>
       </div>
     </div>
   );
