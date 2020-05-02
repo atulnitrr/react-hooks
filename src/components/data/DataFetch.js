@@ -5,6 +5,7 @@ export default function DataFetch() {
   const [articles, setArticles] = useState([]);
   const [query, setQuery] = useState("react hooks");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   var serachRef = useRef();
 
   // useEffect(async () => {
@@ -35,10 +36,14 @@ export default function DataFetch() {
 
   const getData = async () => {
     setLoading(true);
-    var data = await axios.get(
-      `http://hn.algolia.com/api/v1/search?query=${query}`
-    );
-    setArticles(data.data.hits);
+    try {
+      var data = await axios.get(
+        `http://hn.algolia.com/api/v1/search?query=${query}`
+      );
+      setArticles(data.data.hits);
+    } catch (error) {
+      setError(error);
+    }
     setLoading(false);
   };
 
@@ -84,6 +89,8 @@ export default function DataFetch() {
           ))}
         </ul>
       )}
+
+      {error && <div>{error.message}</div>}
     </div>
   );
 }
