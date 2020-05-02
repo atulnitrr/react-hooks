@@ -1,6 +1,6 @@
 import React, { useContext, useReducer } from "react";
 
-import { UserContext } from "./todo";
+// import { UserContext } from "./todo";
 const initialState = {
   count: 0,
 };
@@ -22,12 +22,12 @@ const reducer = (state, action) => {
 };
 
 export const Dummy = () => {
-  var data = useContext(UserContext);
+  // var data = useContext(UserContext);
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <div>
       <h1>Dummy </h1>
-      <h2>{data}</h2>
+
       <strong>Count {state.count} </strong>
       <button
         className="border m-2 p-2"

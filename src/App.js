@@ -1,21 +1,27 @@
-import React, { useContext, createContext } from "react";
+import React, { useContext, useReducer } from "react";
 import CounterComponent, { CounterClass } from "./components/CounterClass";
 import CounterFuncComponent from "./components/CounterFuncComponent";
 
 import Login from "./components/login/login";
 import Register from "./components/register/register";
 import DataFetch from "./components/data/DataFetch";
-import Todo, { UserContext } from "./todo/component/todo";
+import Todo from "./todo/component/todo";
 import { Dummy } from "./todo/component/dummy";
 
+import TodoContext from "./todo/component/context";
+import todoReducer from "./todo/component/reducer";
+
 function App() {
+  const intialState = useContext(TodoContext);
+  const [state, dispatch] = useReducer(todoReducer, intialState);
   return (
-    <UserContext.Provider value="some dummy value">
+    // <UserContext.Provider value="some dummy value">
+    <TodoContext.Provider value={{ state, dispatch }}>
       <div>
         <div>
           <h2>TODO app </h2>
           <Todo />
-          <Dummy />
+          {/* <Dummy /> */}
           {/* <Todo username={userName} /> */}
         </div>
         {/* Todo div ends here */}
@@ -35,7 +41,8 @@ function App() {
         <CounterFuncComponent />
       </div> */}
       </div>
-    </UserContext.Provider>
+    </TodoContext.Provider>
+    // </UserContext.Provider>
   );
 }
 
