@@ -59,7 +59,10 @@ export default function DataFetch() {
   };
 
   return (
-    <div>
+    <div
+      className="container mx-w-md mx-auto 
+    p-4 m-2 bg-purple-lightest"
+    >
       {/* <h2>Data fetch</h2> */}
       <form onSubmit={handleSubmit}>
         <input
