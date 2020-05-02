@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
 
+const initialLoaction = {
+  latitude: null,
+  longitude: null,
+};
+
 const CounterFunctionComponent = () => {
   const [count, setCount] = useState(0);
   const [isOn, setIsOn] = useState(false);
   const [positiom, setPosition] = useState({ x: null, y: null });
   const [onlineStaus, setOnlineStatus] = useState(navigator.onLine);
+
+  const [location, setLocation] = useState(initialLoaction);
+  let mounted = true;
 
   const increment = () => {
     setCount((prevCount) => prevCount + 1);
@@ -22,12 +30,28 @@ const CounterFunctionComponent = () => {
     window.addEventListener("online", handleOnline);
     window.addEventListener("offline", handleOffline);
 
+    navigator.geolocation.getCurrentPosition(handleGeoLocation);
+
+    var watchId = navigator.geolocation.watchPosition(handleGeoLocation);
+
     return () => {
       window.removeEventListener("mouseover", handleMouseOver);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+      navigator.geolocation.clearWatch(watchId);
+      mounted = false;
     };
   }, [count]);
   // [] arrays says it will run on mount and unmount
 
+  const handleGeoLocation = (event) => {
+    if (mounted) {
+      setLocation({
+        latitude: event.coords.latitude,
+        longiture: event.coords.longitude,
+      });
+    }
+  };
   const handleOnline = (event) => {
     setOnlineStatus(true);
   };
@@ -68,6 +92,11 @@ const CounterFunctionComponent = () => {
         <h3>
           Youe are <strong>{onlineStaus ? "Online" : "Offline"}</strong>{" "}
         </h3>
+      </div>
+      {/* Network status div end here */}
+      <div>
+        <h2>Geo location</h2>
+        <h3>{JSON.stringify(location)}</h3>
       </div>
     </div>
   );
