@@ -7,8 +7,10 @@ function App() {
   return (
     <div>
       <CounterComponent></CounterComponent>
-      <h1>Counter function</h1>
-      <CounterFunctionComponent />
+
+      <h3>Function compponent</h3>
+      <h4>---------------------</h4>
+      {/* <CounterFunctionComponent /> */}
     </div>
   );
 }
