@@ -3,7 +3,7 @@ import React, { createContext, useReducer, useContext } from "react";
 import TodoContext from "./context";
 
 export default function Todo(props) {
-  const { state } = useContext(TodoContext);
+  const { state, dispatch } = useContext(TodoContext);
 
   return (
     <div>
@@ -15,8 +15,20 @@ export default function Todo(props) {
               {" "}
               <input
                 type="checkbox"
-                checked={todo.complete ? true : false}
+                onClick={(event) => dispatch({ type: "TOGGLE", payload: todo })}
               />{" "}
+              <button
+                type="button"
+                onClick={(event) => dispatch("REMOVE")}
+                style={{
+                  color: "green",
+                  backgroundColor: "pink",
+                  margin: "10px",
+                  padding: "10px",
+                }}
+              >
+                Remove
+              </button>
             </span>
           </li>
         ))}
