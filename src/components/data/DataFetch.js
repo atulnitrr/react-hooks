@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { getDefaultNormalizer } from "@testing-library/react";
 
 export default function DataFetch() {
   const [articles, setArticles] = useState([]);
   const [query, setQuery] = useState("react hooks");
+  var serachRef = useRef();
 
   // useEffect(async () => {
   //   // async await method
@@ -44,6 +44,12 @@ export default function DataFetch() {
     getData();
   };
 
+  const handleClear = (event) => {
+    setQuery("");
+    console.log(serachRef.current);
+    serachRef.current.focus();
+  };
+
   return (
     <div>
       {/* <h2>Data fetch</h2> */}
@@ -53,9 +59,14 @@ export default function DataFetch() {
           id="query"
           placeholder="seach...."
           value={query}
+          ref={serachRef}
           onChange={(event) => setQuery(event.target.value)}
         />
+
         <button type="submit">Search</button>
+        <button type="button" onClick={handleClear}>
+          Clear
+        </button>
       </form>
       <ul>
         {articles.map((art) => (
