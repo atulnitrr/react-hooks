@@ -4,6 +4,7 @@ import axios from "axios";
 export default function DataFetch() {
   const [articles, setArticles] = useState([]);
   const [query, setQuery] = useState("react hooks");
+  const [loading, setLoading] = useState(false);
   var serachRef = useRef();
 
   // useEffect(async () => {
@@ -33,10 +34,12 @@ export default function DataFetch() {
   }, []);
 
   const getData = async () => {
+    setLoading(true);
     var data = await axios.get(
       `http://hn.algolia.com/api/v1/search?query=${query}`
     );
     setArticles(data.data.hits);
+    setLoading(false);
   };
 
   const handleSubmit = (event) => {
@@ -68,13 +71,19 @@ export default function DataFetch() {
           Clear
         </button>
       </form>
-      <ul>
-        {articles.map((art) => (
-          <li key={art.objectID}>
-            <a href={art.url}>{art.title}</a>
-          </li>
-        ))}
-      </ul>
+      {loading ? (
+        <div>
+          <h2>Loading data ----</h2>
+        </div>
+      ) : (
+        <ul>
+          {articles.map((art) => (
+            <li key={art.objectID}>
+              <a href={art.url}>{art.title}</a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
