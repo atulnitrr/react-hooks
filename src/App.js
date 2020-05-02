@@ -4,12 +4,15 @@ import CounterFuncComponent from "./components/CounterFuncComponent";
 
 import Login from "./components/login/login";
 import Register from "./components/register/register";
+import DataFetch from "./components/data/DataFetch";
 
 function App() {
   return (
     <div>
-      <h2>Reegister component</h2>
-      <Register />
+      <h2>Data fetch demo</h2>
+      <DataFetch />
+      {/* <h2>Reegister component</h2>
+      <Register /> */}
 
       <h2>Login component</h2>
       {/* <Login /> */}
